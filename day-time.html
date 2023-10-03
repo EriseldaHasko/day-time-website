@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day-time</title>
+  </head>
+  <body>
+    <h1>Today is: <span id="dayName"></span></h1>
+    <h2>Current Time: <span id="currentTime"></span></h2>
+
+    <script>
+      function getDayName(day) {
+        const daylist = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
+        return daylist[day];
+      }
+
+      function convertTimeTo12HourFormat(hour, minute, second) {
+        let prepand = " AM ";
+
+        if (hour >= 12) {
+          prepand = " PM ";
+          hour = hour === 12 ? hour : hour - 12;
+        }
+
+        if (hour === 0 && prepand === " PM ") {
+          prepand = " Noon";
+        }
+
+        if (hour === 0 && prepand === " AM ") {
+          prepand = " Midnight";
+        }
+
+        return {
+          hour,
+          prepand,
+          minute,
+          second,
+        };
+      }
+
+      const today = new Date();
+      const day = today.getDay();
+      const hour = today.getHours();
+      const minute = today.getMinutes();
+      const second = today.getSeconds();
+
+      const dayName = getDayName(day);
+      const formattedTime = convertTimeTo12HourFormat(hour, minute, second);
+
+      console.log(`Today is: ${dayName}.`);
+      console.log(
+        `Current Time: ${formattedTime.hour}${formattedTime.prepand} : ${formattedTime.minute} : ${formattedTime.second}`
+      );
+
+      document.getElementById("dayName").textContent = dayName;
+      document.getElementById(
+        "currentTime"
+      ).textContent = `${formattedTime.hour}${formattedTime.prepand} : ${formattedTime.minute} : ${formattedTime.second}`;
+    </script>
+  </body>
+</html>
